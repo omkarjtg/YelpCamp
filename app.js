@@ -4,16 +4,18 @@ const app = express();
 const path = require('path');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
-const flash = require('connect-flash');
+const flash = require('express-flash');
+const passport = require('passport');
+const LocalPassport = require('passport-local');
+const User = require('./models/users');
 
 const methodOverride = require('method-override');
-const catchAsync = require('./utils/CatchAsync');
 const ExpressError = require('./utils/ExpressError');
 
-
-const campRoutes= require('./routes/campground');
+const userRoutes = require('./routes/users');
+const campRoutes = require('./routes/campground');
 const reviewRoutes = require('./routes/review.js');
-const { createRequire } = require('module');
+
 
 async function connectToDatabase() {
     try {
@@ -51,18 +53,27 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalPassport(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    if (req.originalUrl !== '/login' && req.method === "GET") {
+        req.session.returnTo = req.originalUrl;
+    }
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
-})
+});
 
+app.use('/', userRoutes);
 app.use('/campgrounds', campRoutes);
 app.use('/campgrounds/:id/reviews', reviewRoutes);
-
-
-
-
 
 
 
