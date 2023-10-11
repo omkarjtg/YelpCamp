@@ -32,7 +32,7 @@ userControllers.renderLoginForm = (req, res) => {
 
 userControllers.login = (req, res) => {
     req.flash('success', 'Welcome to YelpCamp');
-    const redirectUrl = res.locals.returnTo || res.locals.previousUrl; 
+const redirectUrl = (res.locals.returnTo || res.locals.previousUrl) || "/campgrounds"; 
     delete req.session.returnTo;
     res.redirect(redirectUrl);
 };

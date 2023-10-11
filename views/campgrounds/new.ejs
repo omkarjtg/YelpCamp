@@ -3,7 +3,7 @@
         <h1 class="text-center">Add new camp</h1>
         <div class="col-6 offset-3">
 
-            <form class="needs-validation" action="/campgrounds" method="POST" novalidate>
+            <form class="needs-validation" action="/campgrounds" method="POST" enctype="multipart/form-data" novalidate>
                 <div class="mb-3">
                     <label class="form-label " for="title">Camp Name</label>
                     <input class="form-control" type="text" name="campground[title]" id="title" required>
@@ -25,15 +25,16 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="image">Image Url</label>
-                    <input class="form-control" type="url" name="campground[image]" id="image" required>
-                    <div class="valid-feedback" id="image-validation-valid">
+                    <label for="formFileMultiple" class="form-label">Add Images</label>
+                    <input class="form-control" type="file" id="fileInput" multiple required>
+                    <div class="valid-feedback">
                         Looks good!
                     </div>
-                    <div class="invalid-feedback" id="image-validation-invalid">
-                        Please provide a valid image url
+                    <div class="invalid-feedback" id="error-message">
+                        Invalid file format. Allowed formats: jpg, jpeg, png, webp
                     </div>
                 </div>
+                
                 <div class="mb-3">
                     <label for="price">Price</label>
                     <div class="input-group">
