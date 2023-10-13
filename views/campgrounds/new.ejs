@@ -1,4 +1,5 @@
 <% layout('layouts/boilerplate') %>
+<script src="/javascripts/validateForms.js"></script>
     <div class="row">
         <h1 class="text-center">Add new camp</h1>
         <div class="col-6 offset-3">
@@ -25,8 +26,8 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="formFileMultiple" class="form-label">Add Images</label>
-                    <input class="form-control" type="file" id="fileInput" multiple required>
+                    <label for="image" class="form-label">Add Images</label>
+                    <input class="form-control" type="file" id="fileInput" name="image" multiple required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
