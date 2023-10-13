@@ -1,15 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const rangeInput = document.getElementById('rating');
-    const ratingTooltip = document.getElementById('ratingTooltip');
-
-    rangeInput.addEventListener('input', () => {
-      const rating = rangeInput.value;
-      ratingTooltip.textContent = rating + " stars";
-      ratingTooltip.style.display = 'block';
-      ratingTooltip.style.left = `${(rating - 1) * 20}%`;
-    });
-  });
- 
   document.addEventListener("DOMContentLoaded", function () {
     // Get the form element
     let form = document.querySelector(".needs-validation");

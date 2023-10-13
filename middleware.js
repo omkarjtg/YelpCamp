@@ -3,6 +3,11 @@ const Review = require('./models/reviews');
 const ExpressError = require('./utils/ExpressError');
 const { campgroundSchema, reviewSchema } = require('./schemas.js');
 
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapBoxToken = 'pk.eyJ1Ijoib21rYXJqdGciLCJhIjoiY2xubjF1ODI2MDFtejJsbzZudDVqanI3ciJ9.t0zeFGyJpuEBjmCQ8XMGEQ';
+const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
+
+
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl;
@@ -58,3 +63,27 @@ module.exports.validateReview = (req, res, next) => {
         next();
     };
 };
+
+module.exports.getCoordinates = async function (locationQuery) {
+    try {
+
+        const geoData = await geocoder.forwardGeocode({
+            query: locationQuery,
+            limit: 1
+        }).send();
+
+        if (geoData && geoData.body && geoData.body.features && geoData.body.features.length > 0) {
+            const coordinates = geoData.body.features[0].geometry.coordinates;
+            return {
+                type: 'Point',
+                coordinates: [coordinates[0], coordinates[1]]
+            };
+        } else {
+            throw new Error('Location not found');
+        }
+    } catch (error) {
+        console.error('Error fetching coordinates:', error);
+        throw error;
+    }
+}
+
