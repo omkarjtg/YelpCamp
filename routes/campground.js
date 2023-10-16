@@ -12,9 +12,7 @@ router.get('/', catchAsync(index));
 
 router.get('/new', isLoggedIn, (renderNewForm));
 
-router.post('/', isLoggedIn, upload.array('image'), validateCampground, catchAsync(createNewCamp), (req, res) => {
-    console.log(req.files);
-});
+router.post('/', isLoggedIn, upload.array('image'), validateCampground, catchAsync(createNewCamp));
 
 
 router.get('/:id', catchAsync(showCampground));
