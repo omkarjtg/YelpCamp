@@ -6,7 +6,8 @@ const map = new mapboxgl.Map({
     zoom: 3
 });
 
-console.log(campground);
+map.addControl(new mapboxgl.NavigationControl());
+ 
 
 
 map.on('load', function () {
