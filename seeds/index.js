@@ -95,7 +95,7 @@ const images = [
     _id: "65298b5dd82c75b3ab5f1953"
   },
   {
-    url: 'https://res.cloudinary.com/dbydljfjx/image/upload/v1697271381/YelpCamp/hw6va24msvyh2fcqqyo6.jpg',
+    url: 'https://res.cloudinary.com/dbydljfjx/image/upload/v1699031643/YelpCamp/k2trgfkfgmqky5osupjh.jpg',
     filename: 'YelpCamp/hw6va24msvyh2fcqqyo6',
     _id: "652a4e566ced0da220b3095f"
   },

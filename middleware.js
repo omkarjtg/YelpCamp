@@ -3,7 +3,9 @@ const Review = require('./models/reviews');
 const ExpressError = require('./utils/ExpressError');
 const { campgroundSchema, reviewSchema } = require('./schemas.js');
 
+
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const sanitize = require("sanitize-html");
 const mapBoxToken = 'pk.eyJ1Ijoib21rYXJqdGciLCJhIjoiY2xubjF1ODI2MDFtejJsbzZudDVqanI3ciJ9.t0zeFGyJpuEBjmCQ8XMGEQ';
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 
