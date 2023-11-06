@@ -4,8 +4,9 @@ const { places, descriptors } = require('./seedhelpers');
 const cities = require('./cities');
 const Campground = require('../models/campgrounds');
 const { getCoordinates } = require('../middleware.js');
+const dbUrl=process.env.DB_URL;
 
-mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -33,7 +34,7 @@ async function seedDB() {
     }
     const coordinates = await getCoordinates(location);
     const camp = new Campground({
-      author: '64fb0d35e371aec9413ecfd5',
+      author: '6548bdb2eb15a6e96d05e599',
       location: location,
       title: `${sample(descriptors)} ${sample(places)}`,
       description:

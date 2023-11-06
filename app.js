@@ -12,6 +12,8 @@ const passport = require('passport');
 const LocalPassport = require('passport-local');
 const User = require('./models/users');
 const helmet = require('helmet');
+const MongoStore = require('connect-mongo');
+
 
 const methodOverride = require('method-override');
 const ExpressError = require('./utils/ExpressError');
@@ -19,11 +21,11 @@ const ExpressError = require('./utils/ExpressError');
 const userRoutes = require('./routes/users');
 const campRoutes = require('./routes/campground');
 const reviewRoutes = require('./routes/review.js');
-
+const dbUrl=process.env.DB_URL;
 
 async function connectToDatabase() {
     try {
-        await mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');
+        await mongoose.connect(dbUrl);
         console.log('Connected to the database');
     } catch (error) {
         console.error('Error connecting to the database:', error);
@@ -43,7 +45,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret!'
+    }
+});
+
+store.on("error", function(e){
+    console.log("SESSION STORE ERROR", e);
+})
+
 const sessionConfig = {
+    store,
     secret: 'admin',
     resave: false,
     saveUninitialized: true,
@@ -53,6 +68,7 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 };
+
 
 app.use(session(sessionConfig));
 app.use(flash());
