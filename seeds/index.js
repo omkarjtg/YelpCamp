@@ -34,7 +34,7 @@ async function seedDB() {
     }
     const coordinates = await getCoordinates(location);
     const camp = new Campground({
-      author: '6548bdb2eb15a6e96d05e599',
+      author: '654a7813e104297216898fd5',
       location: location,
       title: `${sample(descriptors)} ${sample(places)}`,
       description:
